@@ -7,7 +7,8 @@
     "test": "mocha",
     "build": "gulp",
     "package": "rm dist.zip &> /dev/null && rm -R dist && gulp && 7z a dist.zip dist/*",
-    "bump-patch": "npm version patch && json -I -f lib/manifest.json -e \"this.version=\\\"$(json -f package.json version)\\\"\""
+    "preversion": "npm t",
+    "version": "json -I -f lib/manifest.json -e \"this.version=\\\"$(json -f package.json version)\\\"\" && git add lib/manifest.json"
   },
   "repository": {
     "type": "git",
