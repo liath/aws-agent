@@ -1,4 +1,3 @@
-// TODO: Detect existing authentication tokens in query strings
 const aws4 = require('aws4');
 
 const hookConfig = {

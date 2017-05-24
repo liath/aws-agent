@@ -13,13 +13,13 @@ global.URL = URL;
 
 beforeEach(() => {
   requestHandler.state = {
-    credentials: { accessKeyId: '', secretAccessKey: '' },
+    credentials: { accessKeyId: 'test', secretAccessKey: 'test' },
     reqs: {},
   };
 });
 
 describe('Request Handler', () => {
-  describe('- onBeforeRequest Hook', () => {
+  describe('- onBeforeRequest ', () => {
     it('should do nothing when there is no request body', () => {
       requestHandler.onRequest({});
       assert.deepEqual(requestHandler.state.reqs, {});
@@ -32,15 +32,15 @@ describe('Request Handler', () => {
       assert.deepEqual(requestHandler.state.reqs.test, 'testing');
     });
   });
-  describe('- onBeforeSendHeaders Hook', () => {
+  describe('- onBeforeSendHeaders ', () => {
     it('should sign headers', () => {
       const signedHeaders = Object.entries(aws4.sign({
         host: 'sqs.us-east-1.amazonaws.com',
         path: '/?Action=ListQueues',
         method: 'GET',
       }, {
-        accessKeyId: '',
-        secretAccessKey: '',
+        accessKeyId: 'test',
+        secretAccessKey: 'test',
       }).headers).map(x => ({ name: x[0].toString(), value: x[1].toString() }));
       const output = requestHandler.onHeaders({
         url: 'https://sqs.us-east-1.amazonaws.com/?Action=ListQueues',
@@ -48,7 +48,7 @@ describe('Request Handler', () => {
         requestHeaders: [],
         requestId: 'test',
       }).requestHeaders;
-      assert.deepEqual(signedHeaders, output);
+      assert.deepEqual(output, signedHeaders);
     });
   });
 });

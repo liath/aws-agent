@@ -1,12 +1,13 @@
 {
   "name": "aws-agent",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Chrome extension enables access to AWS resources",
   "main": "n",
   "scripts": {
     "test": "mocha",
     "build": "gulp",
-    "package": "rm dist.zip &> /dev/null && rm -R dist && gulp && 7z a dist.zip dist/*"
+    "package": "rm dist.zip &> /dev/null && rm -R dist && gulp && 7z a dist.zip dist/*",
+    "bump-patch": "npm version patch && json -I -f lib/manifest.json -e \"this.version=\\\"$(json -f package.json version)\\\"\""
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "gulp-browserify": "^0.5.1",
     "gulp-uglify": "^2.1.2",
     "gulp-util": "^3.0.8",
+    "json": "^9.0.6",
     "mocha": "^3.3.0",
     "pbkdf2": "^3.0.12",
     "pump": "^1.0.2",
