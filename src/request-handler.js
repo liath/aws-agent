@@ -11,13 +11,22 @@ const extension = {
     credentials: { accessKeyId: '', secretAccessKey: '' },
     reqs: {},
   },
-  onHeaders: req => {
+  connFilter: req => {
     const url = new URL(req.url);
     // Bail if we have no creds or already have a signature
+    // or on s3 stuff which has so been the source of every bug
     if (!extension.state.credentials.accessKeyId ||
         !extension.state.credentials.secretAccessKey ||
+        /.*\.s3(-\w+-\w+-\d+)?\.amazonaws\.com/i.test(url.host) ||
         [...url.searchParams.keys()].some(x =>
           x.toLowerCase().includes('x-amz-'))) {
+      return false;
+    }
+    return url;
+  },
+  onHeaders: req => {
+    const url = extension.connFilter(req);
+    if (!url) {
       return { requestHeaders: req.requestHeaders };
     }
     const flattenedHeaders = {};
@@ -43,8 +52,7 @@ const extension = {
     return { requestHeaders };
   },
   onRequest: req => {
-    if (extension.state.credentials.accessKeyId &&
-        extension.state.credentials.secretAccessKey && req.requestBody) {
+    if (extension.connFilter(req) && req.requestBody) {
       extension.state.reqs[req.requestId] = new TextDecoder('utf-8')
         .decode(req.requestBody.raw[0].bytes);
     }

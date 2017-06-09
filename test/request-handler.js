@@ -21,13 +21,14 @@ beforeEach(() => {
 describe('Request Handler', () => {
   describe('- onBeforeRequest ', () => {
     it('should do nothing when there is no request body', () => {
-      requestHandler.onRequest({});
+      requestHandler.onRequest({ url: 'https://example.com' });
       assert.deepEqual(requestHandler.state.reqs, {});
     });
     it('should save the request body for later use', () => {
       requestHandler.onRequest({
         requestId: 'test',
         requestBody: { raw: [{ bytes: new TextEncoder('utf-8').encode('testing') }] },
+        url: 'https://example.com',
       });
       assert.deepEqual(requestHandler.state.reqs.test, 'testing');
     });
