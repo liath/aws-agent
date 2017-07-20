@@ -52,10 +52,20 @@ const extension = {
     return { requestHeaders };
   },
   onRequest: req => {
-    if (extension.connFilter(req) && req.requestBody) {
-      extension.state.reqs[req.requestId] = new TextDecoder('utf-8')
-        .decode(req.requestBody.raw[0].bytes);
+    const url = extension.connFilter(req);
+    if (extension.connFilter(req)) {
+      const testPath = url.pathname.split('/').map(x =>
+        encodeURIComponent(decodeURIComponent(x))).join('/');
+      if (testPath !== url.pathname) {
+        url.pathname = testPath;
+        return { redirectUrl: url.toString() };
+      }
+      if (req.requestBody) {
+        extension.state.reqs[req.requestId] = new TextDecoder('utf-8')
+          .decode(req.requestBody.raw[0].bytes);
+      }
     }
+    return {};
   },
 };
 module.exports = extension;
