@@ -14,10 +14,10 @@ const extension = {
   connFilter: req => {
     const url = new URL(req.url);
     // Bail if we have no creds or already have a signature
-    // or on s3 stuff which has so been the source of every bug
+    // or on s3 stuff which has been the source of all weirdness so far
     if (!extension.state.credentials.accessKeyId ||
         !extension.state.credentials.secretAccessKey ||
-        /.*\.s3(-\w+-\w+-\d+)?\.amazonaws\.com/i.test(url.host) ||
+        /(.*\.)?s3(-\w+-\w+-\d+)?\.amazonaws\.com/i.test(url.host) ||
         [...url.searchParams.keys()].some(x =>
           x.toLowerCase().includes('x-amz-'))) {
       return false;
