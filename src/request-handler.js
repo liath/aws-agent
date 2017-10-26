@@ -8,7 +8,10 @@ const hookConfig = {
 
 const extension = {
   state: {
-    credentials: { accessKeyId: '', secretAccessKey: '' },
+    credentials: {
+      accessKeyId: '',
+      secretAccessKey: '',
+    },
     reqs: {},
   },
   connFilter: req => {
@@ -16,10 +19,9 @@ const extension = {
     // Bail if we have no creds or already have a signature
     // or on s3 stuff which has been the source of all weirdness so far
     if (!extension.state.credentials.accessKeyId ||
-        !extension.state.credentials.secretAccessKey ||
-        /(.*\.)?s3(-\w+-\w+-\d+)?\.amazonaws\.com/i.test(url.host) ||
-        [...url.searchParams.keys()].some(x =>
-          x.toLowerCase().includes('x-amz-'))) {
+      !extension.state.credentials.secretAccessKey ||
+      /(.*\.)?s3(-\w+-\w+-\d+)?\.amazonaws\.com/i.test(url.host) || [...url.searchParams.keys()].some(x =>
+        x.toLowerCase().includes('x-amz-'))) {
       return false;
     }
     return url;
@@ -27,13 +29,17 @@ const extension = {
   onHeaders: req => {
     const url = extension.connFilter(req);
     if (!url) {
-      return { requestHeaders: req.requestHeaders };
+      return {
+        requestHeaders: req.requestHeaders,
+      };
     }
     const flattenedHeaders = {};
     for (let i = 0; i < req.requestHeaders.length; i++) {
       if (req.requestHeaders[i].name.toLowerCase().includes('x-amz-')) {
         // Bail if the request is already signed
-        return { requestHeaders: req.requestHeaders };
+        return {
+          requestHeaders: req.requestHeaders,
+        };
       }
       if (!req.requestHeaders[i].name.toLowerCase().includes('x-devtools')) {
         flattenedHeaders[req.requestHeaders[i].name] = req.requestHeaders[i].value;
@@ -46,10 +52,15 @@ const extension = {
       method: req.method,
       path: `${url.pathname}${url.search}`,
     }, extension.state.credentials);
-    extension.state.reqs[req.requestId] = undefined;
+    delete extension.state.reqs[req.requestId];
     const requestHeaders = Object.entries(signed.headers).map(x =>
-      ({ name: x[0].toString(), value: x[1].toString() }));
-    return { requestHeaders };
+      ({
+        name: x[0].toString(),
+        value: x[1].toString(),
+      }));
+    return {
+      requestHeaders,
+    };
   },
   onRequest: req => {
     const url = extension.connFilter(req);
@@ -58,7 +69,9 @@ const extension = {
         encodeURIComponent(decodeURIComponent(x))).join('/');
       if (testPath !== url.pathname) {
         url.pathname = testPath;
-        return { redirectUrl: url.toString() };
+        return {
+          redirectUrl: url.toString(),
+        };
       }
       if (req.requestBody) {
         extension.state.reqs[req.requestId] = new TextDecoder('utf-8')
