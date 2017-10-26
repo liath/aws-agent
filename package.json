@@ -1,12 +1,11 @@
 {
   "name": "aws-agent",
   "version": "0.0.9",
-  "description": "Chrome extension enables access to AWS resources",
-  "main": "n",
+  "description": "Chrome extension that enables access to AWS resources",
   "scripts": {
     "test": "mocha",
     "build": "gulp",
-    "package": "rm dist.zip &> /dev/null && rm -R dist && gulp --type='production' && 7z a dist.zip dist/*",
+    "package": "rm -Rf dist dist.zip; gulp --type='production' && 7z a dist.zip dist/*",
     "preversion": "npm t",
     "version": "json -I -f lib/manifest.json -e \"this.version=\\\"$(json -f package.json version)\\\"\" && git add lib/manifest.json"
   },
@@ -20,24 +19,20 @@
     "chrome-extension"
   ],
   "author": "John Jones <john.jones@unifilabs.com>",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "devDependencies": {
     "aliasify": "^2.1.0",
     "assert": "^1.4.1",
-    "babel-preset-es2015": "^6.24.1",
     "browserify": "^14.5.0",
     "gulp": "^3.9.1",
-    "gulp-babel": "^7.0.0",
     "gulp-babili": "^0.1.4",
     "gulp-browserify": "^0.5.1",
     "gulp-util": "^3.0.8",
     "json": "^9.0.6",
     "mocha": "^4.0.1",
-    "pbkdf2": "^3.0.14",
     "pump": "^1.0.2",
     "querystring-browser": "^1.0.4",
     "text-encoding": "^0.6.4",
-    "url": "^0.11.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },
