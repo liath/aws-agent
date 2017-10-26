@@ -74,8 +74,8 @@ const extension = {
         };
       }
       if (req.requestBody) {
-        extension.state.reqs[req.requestId] = new TextDecoder('utf-8')
-          .decode(req.requestBody.raw[0].bytes);
+        const d = new TextDecoder('utf-8');
+        extension.state.reqs[req.requestId] = req.requestBody.raw.reduce((a, x) => a + d.decode(x.bytes), '');
       }
     }
     return {};
