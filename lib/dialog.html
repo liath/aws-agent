@@ -2,20 +2,25 @@
 <html>
   <head>
     <title>AWS Agent Configuration</title>
+    <link rel="stylesheet" href="normalize.css" />
     <style type="text/css">
       html, body {
         width: 300px;
         margin: 0px;
+        overflow: hidden;
       }
       h1 {
-        padding: 0 10px 0 54px;
+        padding-left: 54px;
+        line-height: 30px;
+        margin: 20px 0;
       }
       hr {
           border-color: #fff;
+          width: 100%;
       }
       body {
         background-image:url(data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjIwNDgiIHZpZXdCb3g9IjAgMCAyMDQ4IDIwNDgiIHdpZHRoPSIyMDQ4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHNoYXBlLXJlbmRlcmluZz0iZ2VvbWV0cmljUHJlY2lzaW9uIiB0ZXh0LXJlbmRlcmluZz0iZ2VvbWV0cmljUHJlY2lzaW9uIiBpbWFnZS1yZW5kZXJpbmc9Im9wdGltaXplUXVhbGl0eSIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiPjxkZWZzPjxzdHlsZT4uZmlsMXtmaWxsOm5vbmV9LmZpbDB7ZmlsbDojZjdhODBkO2ZpbGwtcnVsZTpub256ZXJvfTwvc3R5bGU+PC9kZWZzPjxnIGlkPSJMYXllcl94MDAyMF8xIj48cGF0aCBjbGFzcz0iZmlsMCIgZD0iTTk1Ny43OTggMTc3NWwtNjYzLjM4MS0yMzcuOTctMTAuNjI0LTMuODItLjAwMS0xMS4xOFY1NDkuNjkxbC4wMDEtMjIuMzIyIDIxLjEyNCA3LjE5NyA2NjMuMzgxIDIyNi4wNDEgMTAuODc2IDMuNzA2VjE3ODIuNjd6TTE3NTMuNTggMTUzNy4wM0wxMDkwLjIxIDE3NzVsLTIxLjM4IDcuNjdWNzY0LjMxM2wxMC44OC0zLjcwNiA2NjMuMzctMjI2LjA0MSAyMS4xMy03LjE5N1YxNTMzLjIxek0zNjMuNjYxIDQ2MS42MDRsNjcxLjM4OS0xODguOTc4IDkuMTguMTg2IDYyMi41MyAyMDAuNzE4LjI1IDMwLjMxMy02MjIuNTMgMjExLjM0OWgtMTAuMTJMMzYyLjk3MyA0OTIuMTAzeiIvPjwvZz48cGF0aCBjbGFzcz0iZmlsMSIgZD0iTTAgMGgyMDQ4djIwNDhIMHoiLz48L3N2Zz4=);
-        background-position: top left 10px;
+        background-position: top 15px left 10px;
         background-size: 38px;
         background-repeat: no-repeat;
       }
@@ -35,7 +40,7 @@
     <script type="text/javascript" src="dialog.js"></script>
   </head>
   <body>
-    <h1>AWS Agent Configuration</h1>
+    <h1>AWS Agent</h1>
     <hr />
     <div class="grid">
       <input title="Usually looks like AKIA..." placeholder="KeyID" type="text" id="keyid" />
