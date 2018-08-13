@@ -2,18 +2,42 @@
 /* eslint-env mocha */
 const assert = require('assert');
 const aws4 = require('aws4');
-const requestHandler = require('../src/request-handler');
-const TextEncoder = require('text-encoding').TextEncoder;
-const TextDecoder = require('text-encoding').TextDecoder;
-const URL = require('url').URL; // Requires node 7.10.0
+const {
+  TextEncoder,
+  TextDecoder,
+} = require('text-encoding');
+const {
+  URL,
+} = require('url'); // Requires node 7.10.0
 
 // Kind of a dirty hack
 global.TextDecoder = TextDecoder;
 global.URL = URL;
 
+global.chrome = {
+  storage: {
+    onChanged: {
+      addListener: () => {},
+    },
+  },
+  webRequest: {
+    onBeforeRequest: {
+      addListener: () => {},
+    },
+    onBeforeSendHeaders: {
+      addListener: () => {},
+    },
+  },
+};
+
+const requestHandler = require('../src/request-handler');
+
 beforeEach(() => {
   requestHandler.state = {
-    credentials: { accessKeyId: 'test', secretAccessKey: 'test' },
+    credentials: {
+      accessKeyId: 'test',
+      secretAccessKey: 'test',
+    },
     reqs: {},
   };
 });
@@ -21,13 +45,19 @@ beforeEach(() => {
 describe('Request Handler', () => {
   describe('- onBeforeRequest ', () => {
     it('should do nothing when there is no request body', () => {
-      requestHandler.onRequest({ url: 'https://example.com' });
+      requestHandler.onRequest({
+        url: 'https://example.com',
+      });
       assert.deepEqual(requestHandler.state.reqs, {});
     });
     it('should save the request body for later use', () => {
       requestHandler.onRequest({
         requestId: 'test',
-        requestBody: { raw: [{ bytes: new TextEncoder('utf-8').encode('testing') }] },
+        requestBody: {
+          raw: [{
+            bytes: new TextEncoder('utf-8').encode('testing'),
+          }],
+        },
         url: 'https://example.com',
       });
       assert.deepEqual(requestHandler.state.reqs.test, 'testing');
@@ -42,7 +72,10 @@ describe('Request Handler', () => {
       }, {
         accessKeyId: 'test',
         secretAccessKey: 'test',
-      }).headers).map(x => ({ name: x[0].toString(), value: x[1].toString() }));
+      }).headers).map(x => ({
+        name: x[0].toString(),
+        value: x[1].toString(),
+      }));
       const output = requestHandler.onHeaders({
         url: 'https://sqs.us-east-1.amazonaws.com/?Action=ListQueues',
         method: 'GET',

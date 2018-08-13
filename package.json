@@ -5,7 +5,7 @@
   "scripts": {
     "test": "mocha",
     "build": "gulp",
-    "package": "rm -Rf dist dist.zip; gulp --type='production' && 7z a dist.zip dist/*",
+    "package": "bash ./package.sh",
     "preversion": "npm t",
     "version": "json -I -f lib/manifest.json -e \"this.version=\\\"$(json -f package.json version)\\\"\" && git add lib/manifest.json"
   },
@@ -21,27 +21,22 @@
   "author": "John Jones <john.jones@unifilabs.com>",
   "license": "MIT",
   "devDependencies": {
-    "aliasify": "^2.1.0",
     "assert": "^1.4.1",
-    "browserify": "^14.5.0",
-    "gulp": "^3.9.1",
-    "gulp-babili": "^0.1.4",
-    "gulp-browserify": "^0.5.1",
+    "aws4": "^1.7.0",
+    "browserify": "^16.2.2",
+    "envify": "^4.1.0",
+    "gulp-cli": "^2.0.1",
+    "gulp-terser": "^1.0.1",
     "gulp-util": "^3.0.8",
+    "gulp": "^4.0.0",
     "json": "^9.0.6",
-    "mocha": "^4.0.1",
-    "pump": "^1.0.2",
-    "querystring-browser": "^1.0.4",
+    "mocha": "^5.2.0",
+    "normalize.css": "^8.0.0",
+    "pump": "^3.0.0",
     "text-encoding": "^0.6.4",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
-  },
-  "dependencies": {
-    "aws4": "*"
-  },
-  "aliasify": {
-    "aliases": {
-      "querystring": "querystring-browser"
-    }
+    "uglifyify": "^5.0.1",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0",
+    "webextension-polyfill": "^0.3.0"
   }
 }

@@ -3,6 +3,7 @@
     "es6": true,
     "browser": true
   },
+  "plugins": ["eslint-plugin-no-unsanitized"],
   "extends": [
     "airbnb",
     "google"
@@ -55,8 +56,5 @@
         "peerDependencies": true
       }
     ]
-  },
-  "globals": {
-    "chrome": true
   }
 }

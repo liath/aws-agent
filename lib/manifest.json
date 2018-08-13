@@ -5,9 +5,10 @@
     ]
   },
   "browser_action": {
+    "browser_style": true,
     "default_popup": "dialog.html"
   },
-  "description": "Access AWS sigv4 resources with Chrome",
+  "description": "Access AWS sigv4 resources from your browser!",
   "manifest_version": 2,
   "name": "AWS Agent",
   "short_name": "AWS Agent",
@@ -27,5 +28,5 @@
     "webRequest",
     "webRequestBlocking"
   ],
-  "version": "0.0.9"
+  "version": "0.0.10"
 }
