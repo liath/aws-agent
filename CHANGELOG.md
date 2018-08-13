@@ -2,13 +2,16 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
+
+## [0.1.0]
 ### Added
 - this CHANGELOG.
-- switched to being WebExtension first and shimming to support Chrome.
+- switched to being a standard WebExtension and shimming to support Chrome.
 
 ### Changed
 - switched to async interfaces where possible.
 - we build dialog.js with browserify now too.
+- cleaned up the UI a little.
 
 ### Fixed
 - connection filter wasn't catching pre-signed S3 URLs.
