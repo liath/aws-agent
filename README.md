@@ -3,6 +3,12 @@ Allows your browser to access AWS resources that require Amazon's Sigv4 scheme.
 
 Inspired by [carsales/aws-request-signer](https://github.com/carsales/aws-request-signer).
 
+#### Compiling
+```sh
+npm install
+npm run package
+```
+
 #### Main differences from carsales/aws-request-signer:
 
 - They basically rolled their own signature process and I use browserify and [mhart/aws4](https://github.com/mhart/aws4) to handle all heavy lifting.
