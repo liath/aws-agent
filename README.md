@@ -5,7 +5,8 @@ Inspired by [carsales/aws-request-signer](https://github.com/carsales/aws-reques
 
 #### Compiling
 ```sh
-npm install
+# switch this to `npm install` if you're using npm<5.7.1. This may not produce an identical build however.
+npm ci
 npm run package
 ```
 
