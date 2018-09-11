@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
+### Fixed
+- Forgot to load settings at boot!
+
+### Added
+- web-ext was missing from deps.
 
 ## [0.1.0]
 ### Added
@@ -58,7 +63,8 @@ All notable changes to this project will be documented in this file. This change
 ### Changed
 - version bump for no apparent reason.
 
-[Unreleased]: https://github.com/Liath/aws-agent/bulk-importer/compare/0.0.9...HEAD
+[Unreleased]: https://github.com/Liath/aws-agent/compare/0.1.0...HEAD
+[0.1.0]: https://github.com/Liath/aws-agent/commit/67a89c168c8c718dfc75b71ee6a0e3021eeb825b
 [0.0.9]: https://github.com/Liath/aws-agent/commit/5d051100aa288071b5ef68a7f098d59764051831
 [0.0.8]: https://github.com/Liath/aws-agent/commit/255c3d7bb42fb3422516346f2de6a1a21f037324
 [0.0.7]: https://github.com/Liath/aws-agent/commit/4f0150e176d944765700afef9d47d8241306d853

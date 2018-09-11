@@ -25,10 +25,10 @@
     "aws4": "^1.7.0",
     "browserify": "^16.2.2",
     "envify": "^4.1.0",
+    "gulp": "^4.0.0",
     "gulp-cli": "^2.0.1",
     "gulp-terser": "^1.0.1",
     "gulp-util": "^3.0.8",
-    "gulp": "^4.0.0",
     "json": "^9.0.6",
     "mocha": "^5.2.0",
     "normalize.css": "^8.0.0",
@@ -37,6 +37,7 @@
     "uglifyify": "^5.0.1",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
+    "web-ext": "^2.9.0",
     "webextension-polyfill": "^0.3.0"
   }
 }
