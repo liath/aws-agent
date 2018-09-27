@@ -5,6 +5,17 @@ const hookConfig = {
   urls: ['*://*.amazonaws.com/*', 'http://169.254.169.254/*'],
 };
 
+// https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
+const s3tests = [
+  // s3.us-east-1.amazonaws.com
+  // s3-website.us-east-1.amazonaws.com
+  // s3.dualstack.us-east-1.amazonaws.com
+  /(.*\.)?s3(-website|\.dualstack)?(\.|-)\w+-\w+-\d+\.amazonaws\.com/i,
+  // s3.amazonaws.com
+  // s3-external-1.amazonaws.com
+  /(.*\.)?s3(-external-1)?.amazonaws.com/i,
+];
+
 const extension = {
   state: {
     credentials: {
@@ -20,7 +31,7 @@ const extension = {
     // or on s3 stuff which has been the source of all weirdness so far
     if (!extension.state.credentials.accessKeyId
       || !extension.state.credentials.secretAccessKey
-      || /(.*\.)?s3(-\w+-\w+-\d+)?\.amazonaws\.com/i.test(url.host)
+      || s3tests.some(x => x.test(url.host))
       || params.some(x => {
         const p = x.toLowerCase();
         return p.startsWith('x-amz-') || p === 'AWSAccessKeyId';
@@ -73,8 +84,9 @@ const extension = {
   onRequest: req => {
     const url = extension.connFilter(req);
 
-    if (extension.connFilter(req)) {
-      const testPath = url.pathname.split('/').map(x => encodeURIComponent(decodeURIComponent(x))).join('/');
+    if (url) {
+      const testPath = url.pathname.split('/')
+        .map(x => encodeURIComponent(decodeURIComponent(x))).join('/');
 
       if (testPath !== url.pathname) {
         url.pathname = testPath;
@@ -85,9 +97,11 @@ const extension = {
 
       if (req.requestBody) {
         const d = new TextDecoder('utf-8');
-        extension.state.reqs[req.requestId] = req.requestBody.raw.reduce((a, x) => a + d.decode(x.bytes), '');
+        extension.state.reqs[req.requestId] = req.requestBody.raw
+          .reduce((a, x) => a + d.decode(x.bytes), '');
       }
     }
+
     return {};
   },
 };

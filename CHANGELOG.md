@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file. This change
 
 ## [Unreleased]
 
+## [0.1.2]
+### Fixed
+- S3 URL test has been updated to handle everything from the docs.
+
 ## [0.1.1]
 ### Fixed
 - Forgot to load settings at boot!
@@ -65,8 +69,9 @@ All notable changes to this project will be documented in this file. This change
 ### Changed
 - version bump for no apparent reason.
 
-[Unreleased]: https://github.com/Liath/aws-agent/compare/0.1.1...HEAD
-[0.1.0]: https://github.com/Liath/aws-agent/commit/418ce088a06a96f16e8ea89419d0b1d3237faa48
+[Unreleased]: https://github.com/Liath/aws-agent/compare/0.1.2...HEAD
+[0.1.2]: https://github.com/Liath/aws-agent/commit/e47bb54d5ba1ff3d81e1e069b91e726216c65259
+[0.1.1]: https://github.com/Liath/aws-agent/commit/418ce088a06a96f16e8ea89419d0b1d3237faa48
 [0.1.0]: https://github.com/Liath/aws-agent/commit/67a89c168c8c718dfc75b71ee6a0e3021eeb825b
 [0.0.9]: https://github.com/Liath/aws-agent/commit/5d051100aa288071b5ef68a7f098d59764051831
 [0.0.8]: https://github.com/Liath/aws-agent/commit/255c3d7bb42fb3422516346f2de6a1a21f037324

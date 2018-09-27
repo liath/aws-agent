@@ -1,6 +1,6 @@
 {
   "name": "aws-agent",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Chrome extension that enables access to AWS resources",
   "scripts": {
     "test": "mocha",
@@ -22,12 +22,12 @@
   "license": "MIT",
   "devDependencies": {
     "assert": "^1.4.1",
-    "aws4": "^1.7.0",
-    "browserify": "^16.2.2",
+    "aws4": "^1.8.0",
+    "browserify": "^16.2.3",
     "envify": "^4.1.0",
     "gulp": "^4.0.0",
     "gulp-cli": "^2.0.1",
-    "gulp-terser": "^1.0.1",
+    "gulp-terser": "^1.1.5",
     "gulp-util": "^3.0.8",
     "json": "^9.0.6",
     "mocha": "^5.2.0",
@@ -37,7 +37,6 @@
     "uglifyify": "^5.0.1",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
-    "web-ext": "^2.9.0",
-    "webextension-polyfill": "^0.3.0"
+    "webextension-polyfill": "^0.3.1"
   }
 }

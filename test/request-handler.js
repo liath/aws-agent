@@ -10,6 +10,55 @@ const {
   URL,
 } = require('url'); // Requires node 7.10.0
 
+const s3urls = [
+  's3-website.us-east-2.amazonaws.com',
+  's3-website-us-east-1.amazonaws.com',
+  's3-website-us-west-1.amazonaws.com',
+  's3-website-us-west-2.amazonaws.com',
+  's3-website.ca-central-1.amazonaws.com',
+  's3-website.ap-south-1.amazonaws.com',
+  's3-website.ap-northeast-2.amazonaws.com',
+  's3-website.ap-northeast-3.amazonaws.com',
+  's3-website-ap-southeast-1.amazonaws.com',
+  's3-website-ap-southeast-2.amazonaws.com',
+  's3-website-ap-northeast-1.amazonaws.com',
+  's3-website.cn-northwest-1.amazonaws.com.cn',
+  's3-website.eu-central-1.amazonaws.com',
+  's3-website-eu-west-1.amazonaws.com',
+  's3-website.eu-west-2.amazonaws.com',
+  's3-website.eu-west-3.amazonaws.com',
+  's3-website-sa-east-1.amazonaws.com', 's3.us-east-2.amazonaws.com',
+  's3-us-east-2.amazonaws.com', 's3.dualstack.us-east-2.amazonaws.com',
+  's3.amazonaws.com', 's3.us-east-1.amazonaws.com',
+  's3-external-1.amazonaws.com', 's3.dualstack.us-east-1.amazonaws.com',
+  's3.us-west-1.amazonaws.com', 's3-us-west-1.amazonaws.com',
+  's3.dualstack.us-west-1.amazonaws.com', 's3.us-west-2.amazonaws.com',
+  's3-us-west-2.amazonaws.com', 's3.dualstack.us-west-2.amazonaws.com',
+  's3.ca-central-1.amazonaws.com', 's3-ca-central-1.amazonaws.com',
+  's3.dualstack.ca-central-1.amazonaws.com',
+  's3.ap-south-1.amazonaws.com', 's3-ap-south-1.amazonaws.com',
+  's3.dualstack.ap-south-1.amazonaws.com',
+  's3.ap-northeast-2.amazonaws.com', 's3-ap-northeast-2.amazonaws.com',
+  's3.dualstack.ap-northeast-2.amazonaws.com',
+  's3.ap-northeast-3.amazonaws.com', 's3-ap-northeast-3.amazonaws.com',
+  's3.dualstack.ap-northeast-3.amazonaws.com',
+  's3.ap-southeast-1.amazonaws.com', 's3-ap-southeast-1.amazonaws.com',
+  's3.dualstack.ap-southeast-1.amazonaws.com',
+  's3.ap-southeast-2.amazonaws.com', 's3-ap-southeast-2.amazonaws.com',
+  's3.dualstack.ap-southeast-2.amazonaws.com',
+  's3.ap-northeast-1.amazonaws.com', 's3-ap-northeast-1.amazonaws.com',
+  's3.dualstack.ap-northeast-1.amazonaws.com',
+  's3.cn-north-1.amazonaws.com.cn', 's3.cn-northwest-1.amazonaws.com.cn',
+  's3.eu-central-1.amazonaws.com', 's3-eu-central-1.amazonaws.com',
+  's3.dualstack.eu-central-1.amazonaws.com', 's3.eu-west-1.amazonaws.com',
+  's3-eu-west-1.amazonaws.com', 's3.dualstack.eu-west-1.amazonaws.com',
+  's3.eu-west-2.amazonaws.com', 's3-eu-west-2.amazonaws.com',
+  's3.dualstack.eu-west-2.amazonaws.com', 's3.eu-west-3.amazonaws.com',
+  's3-eu-west-3.amazonaws.com', 's3.dualstack.eu-west-3.amazonaws.com',
+  's3.sa-east-1.amazonaws.com', 's3-sa-east-1.amazonaws.com',
+  's3.dualstack.sa-east-1.amazonaws.com',
+];
+
 // Kind of a dirty hack
 global.TextDecoder = TextDecoder;
 global.URL = URL;
@@ -83,6 +132,18 @@ describe('Request Handler', () => {
         requestId: 'test',
       }).requestHeaders;
       assert.deepEqual(output, signedHeaders);
+    });
+  });
+  describe('- connFilter ', () => {
+    it('should skip all s3 urls', () => {
+      const fails = s3urls.filter(x => requestHandler.connFilter({
+        url: `https://${x}`,
+      }));
+
+      if (fails.length) {
+        assert.fail(`Failed S3 URL(s):
+${fails.map(x => `${x},`).join('\n')}`);
+      }
     });
   });
 });
