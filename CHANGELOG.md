@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file. This change
 ### Fixed
 - S3 URL test has been updated to handle everything from the docs.
 
+## [0.1.1]
+### Fixed
+- Forgot to load settings at boot!
+
+### Added
+- web-ext was missing from deps.
+
 ## [0.1.0]
 ### Added
 - this CHANGELOG.

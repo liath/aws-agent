@@ -115,6 +115,8 @@ const getCredentials = async () => {
   extension.state.credentials = creds;
 };
 
+getCredentials();
+
 browser.storage.onChanged.addListener(getCredentials);
 browser.webRequest.onBeforeRequest.addListener(
   extension.onRequest,
