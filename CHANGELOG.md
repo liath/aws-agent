@@ -2,6 +2,8 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
+
+## [0.1.3] - 2018-10-16
 ### Changed
 - Updated deps for cached-path-relative >= 1.0.2. (CVE-2018-16472)
 
@@ -74,7 +76,8 @@ All notable changes to this project will be documented in this file. This change
 ### Changed
 - version bump for no apparent reason.
 
-[Unreleased]: https://github.com/Liath/aws-agent/compare/0.1.2...HEAD
+[Unreleased]: https://github.com/Liath/aws-agent/compare/0.1.3...HEAD
+[0.1.3]: https://github.com/Liath/aws-agent/commit/7180880a3167cf80c5002128f707f3e79e99305e
 [0.1.2]: https://github.com/Liath/aws-agent/commit/e47bb54d5ba1ff3d81e1e069b91e726216c65259
 [0.1.1]: https://github.com/Liath/aws-agent/commit/418ce088a06a96f16e8ea89419d0b1d3237faa48
 [0.1.0]: https://github.com/Liath/aws-agent/commit/67a89c168c8c718dfc75b71ee6a0e3021eeb825b
