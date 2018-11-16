@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file. This change
 
 ## [Unreleased]
 
-## [0.1.3] - 2018-10-16
+## [0.1.3] - 2018-11-16
 ### Changed
 - Updated deps for cached-path-relative >= 1.0.2. (CVE-2018-16472)
 
