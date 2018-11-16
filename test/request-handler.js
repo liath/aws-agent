@@ -68,6 +68,9 @@ global.chrome = {
     onChanged: {
       addListener: () => {},
     },
+    sync: {
+      get: defaults => defaults,
+    },
   },
   webRequest: {
     onBeforeRequest: {

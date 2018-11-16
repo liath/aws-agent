@@ -2,19 +2,24 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
+### Changed
+- Updated deps for cached-path-relative >= 1.0.2. (CVE-2018-16472)
 
-## [0.1.2]
+### Fixed
+- Forgot to save fix for unit tests.
+
+## [0.1.2] - 2018-09-27
 ### Fixed
 - S3 URL test has been updated to handle everything from the docs.
 
-## [0.1.1]
+## [0.1.1] - 2018-09-11
 ### Fixed
 - Forgot to load settings at boot!
 
 ### Added
 - web-ext was missing from deps.
 
-## [0.1.0]
+## [0.1.0] - 2018-08-13
 ### Added
 - this CHANGELOG.
 - switched to being a standard WebExtension and shimming to support Chrome.
@@ -27,7 +32,7 @@ All notable changes to this project will be documented in this file. This change
 ### Fixed
 - connection filter wasn't catching pre-signed S3 URLs.
 
-## [0.0.9]
+## [0.0.9] - 2017-10-26
 ### Changed
 - started using jsbeautify.
 - switched from uglify to babili.
@@ -36,11 +41,11 @@ All notable changes to this project will be documented in this file. This change
 ### Fixed
 - request payloads being truncated to 4096 bytes.
 
-## [0.0.8]
+## [0.0.8] - 2017-09-07
 ### Changed
 - S3 URL regex wasn't doing what I thought it was.
 
-## [0.0.7]
+## [0.0.7] - 2017-07-19
 ### Added
 - LICENSE
 - step in filter to skip S3 URLs.
@@ -48,24 +53,24 @@ All notable changes to this project will be documented in this file. This change
 ### Fixed
 - handling of encoded characters in URLs.
 
-## [0.0.6]
+## [0.0.6] - 2017-06-09
 ### Added
 - filter at `onRequest` so we skip connections we don't care about sooner.
 - step in filter to skip S3 URLs.
 
-## [0.0.5]
+## [0.0.5] - 2017-05-24
 ### Changed
 - use npm's version hooks.
 
-## [0.0.4]
+## [0.0.4] - 2017-05-24
 ### Changed
 - build script stuff to make the version in manifest.json track the one in package.json.
 
-## [0.0.3]
+## [0.0.3] - 2017-05-24
 ### Changed
 - version bump for no apparent reason.
 
-## [0.0.2]
+## [0.0.2] - 2017-05-22
 ### Changed
 - version bump for no apparent reason.
 
