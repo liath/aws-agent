@@ -13,7 +13,7 @@ const s3tests = [
   /(.*\.)?s3(-website|\.dualstack)?(\.|-)\w+-\w+-\d+\.amazonaws\.com/i,
   // s3.amazonaws.com
   // s3-external-1.amazonaws.com
-  /(.*\.)?s3(-external-1)?.amazonaws.com/i,
+  /(.*\.)?s3(-external-1)?\.amazonaws\.com/i,
 ];
 
 const extension = {
