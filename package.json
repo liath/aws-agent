@@ -3,11 +3,11 @@
   "version": "0.1.3",
   "description": "Chrome extension that enables access to AWS resources",
   "scripts": {
-    "test": "mocha",
-    "build": "gulp",
-    "package": "bash ./package.sh",
+    "publish": "make package-all",
+    "publish": "make publish-all",
     "preversion": "npm t",
-    "version": "json -I -f lib/manifest.json -e \"this.version=\\\"$(json -f package.json version)\\\"\" && git add lib/manifest.json"
+    "test": "mocha",
+    "version": "make version"
   },
   "repository": {
     "type": "git",
@@ -21,14 +21,15 @@
   "author": "John Jones <john.jones@unifilabs.com>",
   "license": "MIT",
   "devDependencies": {
+    "@wext/shipit": "^0.2.0",
     "assert": "^1.4.1",
     "aws4": "^1.8.0",
     "browserify": "^16.2.3",
     "envify": "^4.1.0",
-    "gulp": "^4.0.0",
     "gulp-cli": "^2.0.1",
     "gulp-terser": "^1.1.5",
     "gulp-util": "^3.0.8",
+    "gulp": "^4.0.0",
     "json": "^9.0.6",
     "mocha": "^5.2.0",
     "normalize.css": "^8.0.1",

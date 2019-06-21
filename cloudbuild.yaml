@@ -1,0 +1,28 @@
+steps:
+# build
+- name: 'gcr.io/cloud-builders/npm'
+  args:
+    - ci
+# test
+- name: 'gcr.io/cloud-builders/npm'
+  args:
+    - test
+# decrypt the secrets (Grrr! https://issuetracker.google.com/issues/124468298)
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: bash
+  args:
+    - -c
+    - |
+      [[ "$BRANCH_NAME" == "master" ]] && \
+      git describe --exact-match HEAD 2>/dev/null && \
+      gcloud kms decrypt --ciphertext-file=.env.enc --plaintext-file=.env \
+        --location=global --keyring=aws-agent --key=aws-agent
+# deploy if tagged
+- name: 'gcr.io/cloud-builders/npm'
+  entrypoint: bash
+  args:
+    - -c
+    - |
+      [[ "$BRANCH_NAME" == "master" ]] && \
+      git describe --exact-match HEAD 2>/dev/null && \
+      make publish-all
