@@ -31,7 +31,7 @@
     "gulp-util": "^3.0.8",
     "gulp": "^4.0.2",
     "json": "^9.0.6",
-    "mocha": "^6.1.4",
+    "mocha": "^6.2.0",
     "normalize.css": "^8.0.1",
     "pump": "^3.0.0",
     "text-encoding": "^0.7.0",
