@@ -35,7 +35,7 @@
     "normalize.css": "^8.0.1",
     "pump": "^3.0.0",
     "text-encoding": "^0.7.0",
-    "uglifyify": "^5.0.1",
+    "uglifyify": "^5.0.2",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
     "webextension-polyfill": "^0.4.0"
