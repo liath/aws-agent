@@ -21,7 +21,7 @@
   "author": "John Jones <john.jones@unifilabs.com>",
   "license": "MIT",
   "devDependencies": {
-    "@wext/shipit": "^0.2.0",
+    "@wext/shipit": "^0.2.1",
     "assert": "^2.0.0",
     "aws4": "^1.8.0",
     "browserify": "^16.5.0",
