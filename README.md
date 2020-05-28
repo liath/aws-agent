@@ -1,5 +1,5 @@
 ## AWS Agent
-Allows your browser to access AWS resources that require Amazon's Sigv4 scheme.
+Allows your browser to access resources that require AWS Sigv4 signatures.
 
 Inspired by [carsales/aws-request-signer](https://github.com/carsales/aws-request-signer).
 
@@ -12,7 +12,7 @@ npm run package
 
 #### Main differences from carsales/aws-request-signer:
 
-- They basically rolled their own signature process and I use browserify and [mhart/aws4](https://github.com/mhart/aws4) to handle all heavy lifting.
+- They basically rolled their own signature process and I use [mhart/aws4fetch](https://github.com/mhart/aws4fetch) to handle all heavy lifting. This has the perk of using the browser's WebCrypto API, which should be insanely faster.
 - This extension triggers on all AWS services instead of filtering for one.
-- Instance Profile credentials aren't supported as I have no use for them.
+- Instance Profile credentials aren't supported as I have no use for them but could be added fairly trivially.
 - Chrome/Firefox/Opera support.
