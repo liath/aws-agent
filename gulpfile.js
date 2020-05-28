@@ -1,9 +1,6 @@
 const pump = require('pump');
 const gulp = require('gulp');
 const browserify = require('browserify');
-const {
-  noop,
-} = require('gulp-util');
 const minify = require('gulp-terser');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
@@ -29,28 +26,13 @@ const staticFilesFn = async cb => {
 };
 
 const defaultFn = async (cb, env = 'production') => {
-  let requestHandler = browserify({
+  const requestHandler = browserify({
     entries: ['src/request-handler.js'],
-  }).transform('envify', {
-    NODE_ENV: env,
-    global: true,
   });
 
-  let dialog = browserify({
+  const dialog = browserify({
     entries: ['src/dialog.js'],
-  }).transform('envify', {
-    NODE_ENV: env,
-    global: true,
   });
-
-  if (env === 'production') {
-    requestHandler = requestHandler.transform('uglifyify', {
-      global: true,
-    });
-    dialog = dialog.transform('uglifyify', {
-      global: true,
-    });
-  }
 
   const keys = [];
   const locks = [
@@ -62,14 +44,14 @@ const defaultFn = async (cb, env = 'production') => {
     requestHandler.bundle(),
     source('request-handler.js'),
     buffer(),
-    (env === 'production' ? minify() : noop()),
+    ...env === 'production' ? [minify()] : [],
     gulp.dest('dist'),
   ], keys.pop());
   pump([
     dialog.bundle(),
     source('dialog.js'),
     buffer(),
-    (env === 'production' ? minify() : noop()),
+    ...env === 'production' ? [minify()] : [],
     gulp.dest('dist'),
   ], keys.pop());
 
