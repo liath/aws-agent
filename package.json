@@ -21,6 +21,7 @@
   "author": "John Jones <john@exthilion.org>",
   "license": "MIT",
   "devDependencies": {
+    "@wext/shipit": "^0.2.1",
     "assert": "^1.5.0",
     "aws4fetch": "^1.0.5",
     "browserify": "^16.5.1",

@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
+## [Unreleased]
+### Fixed
+- I forgot to add @wext/shipit to package.json.
+
 ## [0.2.0] - 2020-05-27
 ### Changed
 - Polished UI a bit
