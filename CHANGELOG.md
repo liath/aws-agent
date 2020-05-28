@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file. This change
 ## [Unreleased]
 ### Fixed
 - I forgot to add @wext/shipit to package.json.
+- cloudbuild was very opaque about what it was doing.
 
 ## [0.2.0] - 2020-05-27
 ### Changed
