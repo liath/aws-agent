@@ -2,7 +2,7 @@ const browser = require('webextension-polyfill');
 const aws4 = require('aws4');
 
 const hookConfig = {
-  urls: ['*://*.amazonaws.com/*', 'http://169.254.169.254/*'],
+  urls: ['*://*.amazonaws.com/*'],
 };
 
 // https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
