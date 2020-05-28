@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
+### Changed
+- Switched from a dumb shell script to a Makefile for packaging.
+
+### Added
+- Some CI/CD stuff
+
+### Fixed
+- Imprecise regex in S3 check.
 
 ## [0.1.3] - 2018-11-16
 ### Changed
