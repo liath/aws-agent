@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('secret').value = creds.secretAccessKey;
 
   document.querySelectorAll('input').forEach(input => {
+    input.addEventListener('keydown', keyupHandler);
     input.addEventListener('keyup', keyupHandler);
+    input.addEventListener('paste', keyupHandler);
+    input.addEventListener('pointerover', keyupHandler);
   });
 });
