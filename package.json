@@ -5,7 +5,7 @@
   "scripts": {
     "test": "mocha",
     "build": "gulp",
-    "package": "bash ./package.sh",
+    "package": "make package-all",
     "preversion": "npm t",
     "version": "npx json -I -f lib/manifest.json -e \"this.version=\\\"$(npx json -f package.json version)\\\"\" && git add lib/manifest.json"
   },
