@@ -15,16 +15,25 @@ steps:
   args:
   - -c
   - |
-    [[ "$BRANCH_NAME" == "master" ]] && \
-    git describe --exact-match HEAD 2>/dev/null && \
-    gcloud kms decrypt --ciphertext-file=.env.enc --plaintext-file=.env \
-      --location=global --keyring=aws-agent --key=aws-agent || true
+    echo 'Checking if master branch...'
+    if [[ "$BRANCH_NAME" == "master" ]]; then
+      echo 'Checking if tagged version'
+      echo "Also worth inspecting TAG_NAME: $TAG_NAME"
+      if git describe --exact-match HEAD; then
+        gcloud kms decrypt --ciphertext-file=.env.enc --plaintext-file=.env \
+          --location=global --keyring=aws-agent --key=aws-agent || true
+      fi
+    fi
 # deploy if tagged
-- name: 'gcr.io/cloud-builders/npm'
+- name: 'node'
   entrypoint: bash
   args:
   - -c
   - |
-    [[ "$BRANCH_NAME" == "master" ]] && \
-    git describe --exact-match HEAD 2>/dev/null && \
-    make publish-all || true
+    echo 'Checking if master branch...'
+    if [[ "$BRANCH_NAME" == "master" ]]; then
+      echo 'Checking if tagged version'
+      if git describe --exact-match HEAD; then
+        make publish-all
+      fi
+    fi
