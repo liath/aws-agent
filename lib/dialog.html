@@ -2,49 +2,66 @@
 <html>
   <head>
     <title>AWS Agent Configuration</title>
+    <meta charset="utf-8">
     <link rel="stylesheet" href="normalize.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet">
     <style type="text/css">
-      html, body {
-        width: 300px;
-        margin: 0px;
-        overflow: hidden;
-      }
-      h1 {
-        padding-left: 54px;
-        line-height: 30px;
-        margin: 20px 0;
-      }
-      hr {
-          border-color: #fff;
-          width: 100%;
-      }
-      body {
-        background-image:url(data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjIwNDgiIHZpZXdCb3g9IjAgMCAyMDQ4IDIwNDgiIHdpZHRoPSIyMDQ4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHNoYXBlLXJlbmRlcmluZz0iZ2VvbWV0cmljUHJlY2lzaW9uIiB0ZXh0LXJlbmRlcmluZz0iZ2VvbWV0cmljUHJlY2lzaW9uIiBpbWFnZS1yZW5kZXJpbmc9Im9wdGltaXplUXVhbGl0eSIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiPjxkZWZzPjxzdHlsZT4uZmlsMXtmaWxsOm5vbmV9LmZpbDB7ZmlsbDojZjdhODBkO2ZpbGwtcnVsZTpub256ZXJvfTwvc3R5bGU+PC9kZWZzPjxnIGlkPSJMYXllcl94MDAyMF8xIj48cGF0aCBjbGFzcz0iZmlsMCIgZD0iTTk1Ny43OTggMTc3NWwtNjYzLjM4MS0yMzcuOTctMTAuNjI0LTMuODItLjAwMS0xMS4xOFY1NDkuNjkxbC4wMDEtMjIuMzIyIDIxLjEyNCA3LjE5NyA2NjMuMzgxIDIyNi4wNDEgMTAuODc2IDMuNzA2VjE3ODIuNjd6TTE3NTMuNTggMTUzNy4wM0wxMDkwLjIxIDE3NzVsLTIxLjM4IDcuNjdWNzY0LjMxM2wxMC44OC0zLjcwNiA2NjMuMzctMjI2LjA0MSAyMS4xMy03LjE5N1YxNTMzLjIxek0zNjMuNjYxIDQ2MS42MDRsNjcxLjM4OS0xODguOTc4IDkuMTguMTg2IDYyMi41MyAyMDAuNzE4LjI1IDMwLjMxMy02MjIuNTMgMjExLjM0OWgtMTAuMTJMMzYyLjk3MyA0OTIuMTAzeiIvPjwvZz48cGF0aCBjbGFzcz0iZmlsMSIgZD0iTTAgMGgyMDQ4djIwNDhIMHoiLz48L3N2Zz4=);
-        background-position: top 15px left 10px;
-        background-size: 38px;
-        background-repeat: no-repeat;
-      }
+        html, body {
+          width: 400px;
+          overflow: hidden;
+          font-family: 'Rubik', sans-serif;
+        }
+        body {
+          background-image:url(./aws.png);
+          background-position: top 15px left 6px;
+          background-size: 60px;
+          background-repeat: no-repeat;
 
-      .grid {
           display: grid;
-          grid-template-columns: 15px calc(100% - 30px) 15px;
-          padding: 10px 0;
-      }
-      .grid input:first-of-type {
-        margin-bottom: 8px;
-      }
-      .grid input {
-        grid-column-start: 2;
-      }
+          grid-template-columns: 132px auto;
+        }
+
+        a:link, a:visited, a:hover, a:active {
+          color: #2e2e2e;
+          text-decoration: none;
+        }
+
+        h1 {
+          margin: 15px 10px 0 0;
+          font-weight: lighter;
+          font-size: 21px;
+          color: #2e2e2e;
+          text-align: right;
+        }
+
+        .row {
+          padding: 4px;
+          border-color: #cecece;
+          border-left-style: solid;
+          border-width: 1px;
+          line-height: 23px;
+        }
+        .row:first-child {
+          border-bottom-style: solid;
+        }
+        .row input {
+          border: none;
+          padding: 0;
+          width: 100%;
+          color: #444444;
+        }
     </style>
     <script type="text/javascript" src="dialog.js"></script>
   </head>
   <body>
-    <h1>AWS Agent</h1>
-    <hr />
-    <div class="grid">
-      <input title="Usually looks like AKIA..." placeholder="KeyID" type="text" id="keyid" />
-      <input placeholder="Secret" type="text" id="secret" />
+    <a href="https://github.com/liath/aws-agent" target="_blank"><h1>agent</h1></a>
+    <div class="frame">
+      <div class="row">
+        <input title="Usually looks like AKIA..." placeholder="KeyID" type="text" id="keyid" />
+      </div>
+      <div class="row">
+        <input placeholder="Secret" type="text" id="secret" />
+      </div>
     </div>
   </body>
 </html>
