@@ -22,6 +22,9 @@ global.Headers = Headers;
 global.crypto = webcrypto;
 
 global.chrome = {
+  runtime: {
+    id: 'webextension-polyfill-shim',
+  },
   storage: {
     onChanged: {
       addListener: () => { },
