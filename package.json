@@ -23,7 +23,7 @@
   "devDependencies": {
     "@wext/shipit": "^0.2.1",
     "assert": "^2.0.0",
-    "aws4fetch": "^1.0.10",
+    "aws4fetch": "^1.0.12",
     "browserify": "^16.5.2",
     "eslint": "^7.6.0",
     "eslint-config-airbnb": "^18.2.0",
