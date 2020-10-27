@@ -29,7 +29,7 @@
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-no-unsanitized": "^3.1.4",
     "eslint-plugin-react": "^7.21.5",
     "gulp": "^4.0.2",
