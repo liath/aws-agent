@@ -34,7 +34,7 @@
     "eslint-plugin-react": "^7.21.5",
     "gulp": "^4.0.2",
     "gulp-cli": "^2.3.0",
-    "gulp-terser": "^1.4.1",
+    "gulp-terser": "^2.0.0",
     "isomorphic-webcrypto": "^2.3.6",
     "json": "^10.0.0",
     "mocha": "^8.2.1",
