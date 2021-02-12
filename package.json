@@ -37,7 +37,7 @@
     "gulp-terser": "^2.0.1",
     "isomorphic-webcrypto": "^2.3.6",
     "json": "^10.0.0",
-    "mocha": "^8.2.1",
+    "mocha": "^8.3.0",
     "node-fetch": "^2.6.1",
     "normalize.css": "^8.0.1",
     "pump": "^3.0.0",
