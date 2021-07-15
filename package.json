@@ -21,7 +21,6 @@
   "author": "John Jones <john@exthilion.org>",
   "license": "MIT",
   "devDependencies": {
-    "@wext/shipit": "^0.2.1",
     "assert": "^2.0.0",
     "aws4": "^1.11.0",
     "aws4fetch": "^1.0.13",
@@ -42,7 +41,6 @@
     "node-fetch": "^2.6.1",
     "normalize.css": "^8.0.1",
     "pump": "^3.0.0",
-    "text-encoding-shim": "^1.0.5",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
     "webextension-polyfill": "^0.8.0"
