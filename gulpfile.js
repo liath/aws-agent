@@ -25,9 +25,9 @@ const staticFilesFn = async cb => {
   cb();
 };
 
-const defaultFn = async (cb, env = 'production') => {
+const defaultFn = async (cb, browser, env) => {
   const requestHandler = browserify({
-    entries: ['src/request-handler.js'],
+    entries: [`src/${browser}.js`],
   });
 
   const dialog = browserify({
@@ -42,7 +42,7 @@ const defaultFn = async (cb, env = 'production') => {
 
   pump([
     requestHandler.bundle(),
-    source('request-handler.js'),
+    source(`request-handler.js`),
     buffer(),
     ...env === 'production' ? [minify()] : [],
     gulp.dest('dist'),
@@ -59,12 +59,14 @@ const defaultFn = async (cb, env = 'production') => {
   cb();
 };
 
-const developFn = cb => defaultFn(cb, 'dev');
-
-const watchFn = () => gulp.watch(['src/*', 'lib/*'], gulp.series(staticFilesFn, developFn));
-
 module.exports = {
-  default: gulp.series(staticFilesFn, defaultFn),
-  staticFiles: staticFilesFn,
-  watch: gulp.series(staticFilesFn, developFn, watchFn),
+  'firefox-dev': gulp.series(staticFilesFn, cb => defaultFn(cb, 'firefox', 'dev')),
+  'firefox-prod': gulp.series(staticFilesFn, cb => defaultFn(cb, 'firefox', 'production')),
+  'firefox-watch': () => gulp.watch(['src/*', 'lib/*'], module.exports.firefoxDev),
+  'chrome-dev': gulp.series(staticFilesFn, cb => defaultFn(cb, 'chrome', 'dev')),
+  'chrome-prod': gulp.series(staticFilesFn, cb => defaultFn(cb, 'chrome', 'production')),
+  'chrome-watch': () => gulp.watch(['src/*', 'lib/*'], module.exports.chromeDev),
+  'static-files': staticFilesFn,
+  default: module.exports.firefoxDev,
 };
+

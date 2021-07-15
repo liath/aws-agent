@@ -1,36 +1,13 @@
-/* eslint import/no-unresolved:0 */
 /* eslint-env mocha */
 const assert = require('assert');
-const { AwsV4Signer } = require('aws4fetch');
-
-// shims browser objects
-const {
-  TextEncoder,
-  TextDecoder,
-} = require('text-encoding-shim');
-const {
-  URL,
-} = require('url'); // Requires node 7.10.0
-const {
-  Headers,
-} = require('node-fetch');
-const webcrypto = require('isomorphic-webcrypto');
-
-global.TextDecoder = TextDecoder;
-global.URL = URL;
-global.Headers = Headers;
-global.crypto = webcrypto;
 
 global.chrome = {
   runtime: {
-    id: 'webextension-polyfill-shim',
+    id: 'shim',
   },
   storage: {
     onChanged: {
       addListener: () => { },
-    },
-    sync: {
-      get: defaults => defaults,
     },
   },
   webRequest: {
@@ -43,61 +20,113 @@ global.chrome = {
   },
 };
 
-const requestHandler = require('../src/request-handler');
+const Extension = require('../src/extension');
+
+const ext = new Extension(() => {});
 
 beforeEach(() => {
-  requestHandler.state = {
-    credentials: {
-      accessKeyId: 'test',
-      secretAccessKey: 'test',
-    },
-    reqs: {},
+  ext.credentials = {
+    accessKeyId: 'test',
+    secretAccessKey: 'test',
   };
+  ext.reqs = {};
 });
 
 describe('Request Handler', () => {
   describe('- onBeforeRequest ', () => {
-    it('should do nothing when there is no request body', () => {
-      requestHandler.onRequest({
+    it('should bail when there\'s no creds', () => {
+      ext.credentials = {};
+
+      const pristine = {
+        requestHeaders: [{
+          test: 'hallo!',
+        }],
+      };
+
+      const output = ext.onRequest({
+        ...pristine,
+      });
+
+      assert.deepEqual(pristine, output);
+    });
+
+    it('should return nothing', () => {
+      ext.onRequest({
         url: 'https://example.com',
       });
-      assert.deepEqual(requestHandler.state.reqs, {});
+      assert.deepEqual(ext.reqs, {});
     });
+
+    it('should redirect when path changes after url-encoding', () => {
+      const res = ext.onRequest({
+        requestId: 'test',
+        url: 'https://example.com/%7E',
+      });
+
+      assert.deepEqual(res, {
+        redirectUrl: 'https://example.com/~',
+      }, 'URL re-encoding check failed, AWS performs re-encoding when checking the signature on their end so we must redirect to make sure we are signing the same thing they are veryifying against.');
+    });
+
+    it('should redirect deprecated S3 urls', () => {
+      const res = ext.onRequest({
+        requestId: 'test',
+        url: 'https://test.s3-us-west-3.amazonaws.com/test',
+      });
+
+      assert.deepEqual(res, {
+        redirectUrl: 'https://test.s3.us-west-3.amazonaws.com/test',
+      }, 'we have to rewrite some S3 urls, per discussion here https://github.com/mhart/aws4fetch/issues/13');
+    });
+
     it('should save the request body for later use', () => {
       const requestBody = new TextEncoder('utf-8').encode('testing');
-      requestHandler.onRequest({
+      ext.onRequest({
         requestId: 'test',
         requestBody,
         url: 'https://example.com',
       });
-      assert.deepEqual(requestHandler.state.reqs.test, requestBody);
+      assert.deepEqual(ext.reqs.test, requestBody);
     });
   });
+
   describe('- onBeforeSendHeaders ', () => {
-    it('should sign headers', async () => {
-      const signed = await new AwsV4Signer({
-        url: new URL('https://sqs.us-east-1.amazonaws.com/?Action=ListQueues'),
-        accessKeyId: 'test',
-        secretAccessKey: 'test',
-        method: 'GET',
-        headers: {},
-      }).sign();
+    it('should bail when there\'s no creds', () => {
+      ext.credentials = {};
 
-      const signedHeaders = [
-        ['Host', signed.url.host],
-        ...signed.headers.entries()].map(x => ({
-        name: x[0].toString(),
-        value: x[1].toString(),
-      }));
+      const pristine = {
+        requestHeaders: [{
+          test: 'hallo!',
+        }],
+      };
 
-      const output = (await requestHandler.onHeaders({
+      const output = ext.onHeaders({
+        ...pristine,
+      });
+
+      assert.deepEqual(pristine, output);
+    });
+
+    it('should call signer', () => {
+      const tracker = new assert.CallTracker();
+
+      ext.signer = tracker.calls(req => {}, 1);
+
+      ext.onHeaders({
         url: 'https://sqs.us-east-1.amazonaws.com/?Action=ListQueues',
         method: 'GET',
-        requestHeaders: [],
+        requestHeaders: [{
+          name: 'test',
+          value: 'test',
+        }, {
+          name: 'connection',
+          value: 'stripped',
+        }],
         requestId: 'test',
-      })).requestHeaders;
+      });
 
-      assert.deepEqual(output, signedHeaders);
+      tracker.verify();
     });
   });
 });
+

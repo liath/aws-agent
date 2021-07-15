@@ -1,4 +1,3 @@
-all: test build
 package-all: test package-chrome package-firefox
 publish-all: test publish-chrome publish-firefox
 
@@ -8,21 +7,21 @@ clean:
 test:
 	npm test
 
-build: clean
-	npx gulp
+build-chrome: clean
+	npx gulp chrome-prod 
+build-firefox: clean
+	npx gulp firefox-prod
 
-package-chrome: build
+package-chrome: build-chrome
 	cd dist && npx web-ext build
 	mv dist/web-ext-artifacts/aws_agent*.zip chrome.zip
-
-package-firefox: build _prepare-firefox
+package-firefox: build-firefox _prepare-firefox
 	cd dist && npx web-ext build
 	mv dist/web-ext-artifacts/aws_agent*.zip firefox.zip
 
-publish-chrome: build
+publish-chrome: build-chrome
 	npx shipit chrome dist
-
-publish-firefox: build _prepare-firefox
+publish-firefox: build-firefox _prepare-firefox
 	npx shipit firefox dist
 
 _prepare-firefox:
@@ -35,3 +34,4 @@ _prepare-firefox:
 version:
 	npx json -I -f lib/manifest.json -e 'this.version="'$(shell npx json -f package.json version)'"'
 	git add lib/manifest.json
+
