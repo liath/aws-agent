@@ -1,0 +1,24 @@
+name: lint-and-test
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - run: |
+        npm ci
+        npx nyc mocha
+        npx nyc check-coverage --brances 100 --functions 100 --lines 100 --statements 100
+        npx eslint src
+        make build-firefox
+
+    - uses: kewisch/action-web-ext@v1
+      with:
+        cmd: lint
+        source: dist
+        channel: listed
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

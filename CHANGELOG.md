@@ -2,9 +2,14 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
+### Changed
+- Extension is now a customized for Chrome vs Firefox as Chrome still lacks async support on needed APIs.
+  Following the resolution of this ticket we should be good to move Chrome to WebCrypto too:
+  https://bugs.chromium.org/p/chromium/issues/detail?id=328932
+- Switched from CloudBuild to Github Actions
+
 ### Fixed
-- I forgot to add @wext/shipit to package.json.
-- cloudbuild was very opaque about what it was doing.
+- Brought back mhart/aws4 for Chrome builds due to above note.
 
 ## [0.2.0] - 2020-05-27
 ### Changed

@@ -1,0 +1,40 @@
+name: publish
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'manifest.json'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - run: |
+        npm ci
+        make package-all
+
+    - uses: kewisch/action-web-ext@v1
+      with:
+        cmd: sign
+        source: firefox.zip
+        channel: listed
+        apiKey: ${{ secrets.AMO_SIGN_KEY }}
+        apiSecret: ${{ secrets.AMO_SIGN_SECRET }}
+        timeout: 900000
+
+    - uses: SebastienGllmt/chrome-addon@v3
+      with:
+        zip: chrome.zip
+        extension: jjgjefclcmpfpoiinpkpbdllboockoia
+        client-id: ${{ secrets.CWS_CLIENT_ID }}
+        client-secret: ${{ secrets.CWS_CLIENT_SECRET }}
+        refresh-token: ${{ secrets.CWS_REFRESH_TOKEN }}
+
+    - uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        files: firefox.zip chrome.zip
+

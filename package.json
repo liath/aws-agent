@@ -1,6 +1,6 @@
 {
   "name": "aws-agent",
-  "version": "0.3.0",
+  "version": "0.2.0",
   "description": "Chrome extension that enables access to AWS resources",
   "scripts": {
     "test": "mocha",

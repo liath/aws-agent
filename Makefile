@@ -19,11 +19,6 @@ package-firefox: build-firefox _prepare-firefox
 	cd dist && npx web-ext build
 	mv dist/web-ext-artifacts/aws_agent*.zip firefox.zip
 
-publish-chrome: build-chrome
-	npx shipit chrome dist
-publish-firefox: build-firefox _prepare-firefox
-	npx shipit firefox dist
-
 _prepare-firefox:
 	npx json -I -f dist/manifest.json \
 	-e 'this.applications = { gecko: { id: "aws-agent@exthilion.org" } };' \
