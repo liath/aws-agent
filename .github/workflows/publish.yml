@@ -3,7 +3,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'manifest.json'
+      - 'lib/manifest.json'
 
 jobs:
   publish:
