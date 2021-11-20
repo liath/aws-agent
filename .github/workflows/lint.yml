@@ -1,6 +1,10 @@
 name: lint-and-test
 on: [push, pull_request]
 
+permissions:
+  contents: read
+  checks: write
+
 jobs:
   lint:
     runs-on: ubuntu-latest
