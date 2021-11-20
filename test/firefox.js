@@ -2,9 +2,7 @@
 /* eslint-env mocha */
 const assert = require('assert');
 
-const {
-  Headers,
-} = require('node-fetch');
+const Headers = require('fetch-headers');
 const webcrypto = require('isomorphic-webcrypto');
 
 global.Headers = Headers;
