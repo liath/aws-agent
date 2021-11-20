@@ -25,4 +25,13 @@ jobs:
         channel: listed
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+  automerge:
+    needs: lint
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: fastify/github-action-merge-dependabot@v2
+        if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' }}
+        with:
+          github-token: ${{secrets.github_token}}
