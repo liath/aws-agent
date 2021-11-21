@@ -15,7 +15,7 @@ jobs:
         npm ci
         make package-all
 
-    - uses: kewisch/action-web-ext@v1
+    - uses: kewisch/action-web-ext@d5376aebf5a5f167924728cf9b43d6e9e8ee10e0
       with:
         cmd: sign
         source: firefox.zip
@@ -24,7 +24,7 @@ jobs:
         apiSecret: ${{ secrets.AMO_SIGN_SECRET }}
         timeout: 900000
 
-    - uses: SebastienGllmt/chrome-addon@v3
+    - uses: trmcnvn/chrome-addon@3431bca72e30167ac2c2266100b8198615ef37e3
       with:
         zip: chrome.zip
         extension: jjgjefclcmpfpoiinpkpbdllboockoia
@@ -32,9 +32,8 @@ jobs:
         client-secret: ${{ secrets.CWS_CLIENT_SECRET }}
         refresh-token: ${{ secrets.CWS_REFRESH_TOKEN }}
 
-    - uses: softprops/action-gh-release@v1
+    - uses: softprops/action-gh-release@1e07f4398721186383de40550babbdf2b84acfc5
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         files: firefox.zip chrome.zip
-

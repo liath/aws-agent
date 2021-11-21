@@ -18,21 +18,21 @@ jobs:
         npx eslint src
         make build-firefox
 
-    - uses: kewisch/action-web-ext@v1
+    - uses: kewisch/action-web-ext@d5376aebf5a5f167924728cf9b43d6e9e8ee10e0
       with:
         cmd: lint
         source: dist
         channel: listed
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   automerge:
     needs: lint
     runs-on: ubuntu-latest
+    if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' }}
     permissions:
       pull-requests: write
     steps:
-      - run: env
-      - uses: fastify/github-action-merge-dependabot@v2.1.1
-        if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' }}
+      - uses: fastify/github-action-merge-dependabot@8124f1b24c8b829de46baf7df0f9d7745ddb923c
         with:
           github-token: ${{secrets.github_token}}
