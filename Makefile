@@ -1,5 +1,4 @@
 package-all: test package-chrome package-firefox
-publish-all: test publish-chrome publish-firefox
 
 clean:
 	rm -rf dist *.zip

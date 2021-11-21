@@ -3,3 +3,4 @@ dist/
 *.zip
 node_modules/
 .nyc_output
+.secrets
