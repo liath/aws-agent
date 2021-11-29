@@ -43,7 +43,7 @@
     "pump": "^3.0.0",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
-    "web-ext": "^6.5.0",
+    "web-ext": "^6.6.0",
     "webextension-polyfill": "^0.8.0"
   }
 }
