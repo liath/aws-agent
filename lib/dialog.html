@@ -41,7 +41,8 @@
           border-width: 1px;
           line-height: 23px;
         }
-        .row:first-child {
+        .row:nth-child(even) {
+          border-top-style: solid;
           border-bottom-style: solid;
         }
         .row input {
@@ -61,6 +62,9 @@
       </div>
       <div class="row">
         <input placeholder="Secret" type="text" id="secret" />
+      </div>
+      <div class="row">
+        <input placeholder="Session Token (Optional)" type="text" id="session_token" />
       </div>
     </div>
   </body>
