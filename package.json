@@ -23,7 +23,7 @@
   "devDependencies": {
     "assert": "^2.0.0",
     "aws4": "^1.11.0",
-    "aws4fetch": "^1.0.13",
+    "aws4fetch": "^1.0.17",
     "browserify": "^17.0.0",
     "eslint": "^8.17.0",
     "eslint-config-airbnb": "^19.0.4",
