@@ -2,7 +2,6 @@ const browser = require('webextension-polyfill');
 
 const hookConfig = {
   urls: [
-    '*://*.ngrok-free.app/*',
     '*://*.amazonaws.com/*',
   ],
 };
@@ -22,7 +21,6 @@ function Extension(signer) {
     sessionToken: '',
   };
   this.reqs = {};
-  };
 
   this.onHeaders = req => {
     if ((!this.credentials.accessKeyId ||
@@ -43,55 +41,21 @@ function Extension(signer) {
         contentType = req.requestHeaders[i].value.toLowerCase();
       }
     }
+
     let body = null;
-    let body = null;
-      // At some point WebExt changed to no longer pass the raw payload
-      // when Content-Type is one of the following:
-      //   - multipart/form-data
-      //   - application/x-www-form-urlencoded
-      // In these cases we'll need to look at the header and determine
-      // which way to turn the form object back into a string and _hope_
-      // that this is what actually appears on the wire. :<
+    if (this.reqs[req.requestId]) {
       if (this.reqs[req.requestId].raw) {
-        // use raw if it's available
+        // Use raw if it's available
         body = this.reqs[req.requestId].raw
           .reduce((s, x) => s + new TextDecoder().decode(x.bytes), '');
-      } else if (this.reqs[req.requestId].formData) {
-        // best effort to un-parse the form data
-        if (contentType === 'application/x-www-form-urlencoded') {
-          body = Object.entries(this.reqs[req.requestId].formData)
-            .reduce((s, [name, values]) => [
-              ...s,
-              ...values.map(value => `${name}=${value}`),
-            ], []).join('&');
-        } else {
-          // TODO: We can not know any of the metadata for file uploads as the
-          //       webextension spec omits them, so we'll never be able to
-          //       sign file uploads unless this lands:
-          //       https://bugzilla.mozilla.org/show_bug.cgi?id=1376155
-
-          // this is prolly flaky, I don't wanna go read an RFC though
-          const sep = '; boundary=';
-          const boundary = `--${contentType.split(sep).slice(1).join(sep)}`;
-
-          body = Object.entries(this.reqs[req.requestId].formData)
-            .reduce((s, [name, values]) => [
-              ...s,
-              ...values.reduce((t, value) => [
-                ...t,
-                boundary,
-                `Content-Disposition: form-data; name="${name}"`,
-                '',
-                value,
-              ], []),
-            ], [])
-            .concat([
-              `${boundary}--`,
-            ])
-            .join('\r\n');
-        }
+      } else {
+        // We can not know any of the metadata for file uploads as the webext
+        // spec omits them so we'll never be able to sign multipart bodies.
+        // I kind of doubt we'd be able to guarantee we reconstruct the payload
+        // byte-for-byte for either of the formdata request types anyways so
+        // lets opt-out of content signing on them.
+        flattenedHeaders['X-Amz-Content-Sha256'] = 'UNSIGNED-PAYLOAD';
       }
-    }
     }
 
     const res = this.signer({
