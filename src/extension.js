@@ -1,7 +1,10 @@
 const browser = require('webextension-polyfill');
 
 const hookConfig = {
-  urls: ['*://*.amazonaws.com/*'],
+  urls: [
+    '*://*.ngrok-free.app/*',
+    '*://*.amazonaws.com/*',
+  ],
 };
 
 const s3dash = /s3-(\w+-\w+-\d+)/;
@@ -19,6 +22,7 @@ function Extension(signer) {
     sessionToken: '',
   };
   this.reqs = {};
+  };
 
   this.onHeaders = req => {
     if ((!this.credentials.accessKeyId ||
@@ -28,12 +32,66 @@ function Extension(signer) {
       };
     }
 
+    let contentType = null;
     const flattenedHeaders = {};
     for (let i = 0; i < req.requestHeaders.length; i++) {
       const header = req.requestHeaders[i].name.toLowerCase();
       if (!header.includes('x-devtools') && header !== 'connection') {
         flattenedHeaders[req.requestHeaders[i].name] = req.requestHeaders[i].value;
       }
+      if (header === 'content-type') {
+        contentType = req.requestHeaders[i].value.toLowerCase();
+      }
+    }
+    let body = null;
+    let body = null;
+      // At some point WebExt changed to no longer pass the raw payload
+      // when Content-Type is one of the following:
+      //   - multipart/form-data
+      //   - application/x-www-form-urlencoded
+      // In these cases we'll need to look at the header and determine
+      // which way to turn the form object back into a string and _hope_
+      // that this is what actually appears on the wire. :<
+      if (this.reqs[req.requestId].raw) {
+        // use raw if it's available
+        body = this.reqs[req.requestId].raw
+          .reduce((s, x) => s + new TextDecoder().decode(x.bytes), '');
+      } else if (this.reqs[req.requestId].formData) {
+        // best effort to un-parse the form data
+        if (contentType === 'application/x-www-form-urlencoded') {
+          body = Object.entries(this.reqs[req.requestId].formData)
+            .reduce((s, [name, values]) => [
+              ...s,
+              ...values.map(value => `${name}=${value}`),
+            ], []).join('&');
+        } else {
+          // TODO: We can not know any of the metadata for file uploads as the
+          //       webextension spec omits them, so we'll never be able to
+          //       sign file uploads unless this lands:
+          //       https://bugzilla.mozilla.org/show_bug.cgi?id=1376155
+
+          // this is prolly flaky, I don't wanna go read an RFC though
+          const sep = '; boundary=';
+          const boundary = `--${contentType.split(sep).slice(1).join(sep)}`;
+
+          body = Object.entries(this.reqs[req.requestId].formData)
+            .reduce((s, [name, values]) => [
+              ...s,
+              ...values.reduce((t, value) => [
+                ...t,
+                boundary,
+                `Content-Disposition: form-data; name="${name}"`,
+                '',
+                value,
+              ], []),
+            ], [])
+            .concat([
+              `${boundary}--`,
+            ])
+            .join('\r\n');
+        }
+      }
+    }
     }
 
     const res = this.signer({
@@ -41,7 +99,7 @@ function Extension(signer) {
       ...this.credentials,
       method: req.method,
       headers: flattenedHeaders,
-      body: this.reqs[req.requestId],
+      body,
     });
 
     delete this.reqs[req.requestId];
@@ -80,7 +138,7 @@ function Extension(signer) {
     }
 
     if (req.requestBody) {
-      this.reqs[req.requestId] = new TextDecoder().decode(req.requestBody.raw[0].bytes);
+      this.reqs[req.requestId] = req.requestBody;
     }
 
     return {};
@@ -108,7 +166,4 @@ function Extension(signer) {
   );
 }
 
-
-
 module.exports = Extension;
-
