@@ -1,3 +1,5 @@
+.PHONY: *
+
 package-all: test package-chrome package-firefox
 
 clean:

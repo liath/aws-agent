@@ -127,6 +127,49 @@ describe('Request Handler', () => {
 
       tracker.verify();
     });
+
+    it('should handle raw request body', () => {
+      const tracker = new assert.CallTracker();
+
+      ext.signer = tracker.calls(req => {}, 1);
+      ext.reqs.test = {
+        raw: [{
+          bytes: new TextEncoder('utf-8').encode('testing'),
+        }],
+      };
+
+      ext.onHeaders({
+        url: 'https://sqs.us-east-1.amazonaws.com/?Action=ListQueues',
+        method: 'GET',
+        requestHeaders: [],
+        requestId: 'test',
+      });
+
+      tracker.verify();
+    });
+
+    it('should handle raw request body', () => {
+      const tracker = new assert.CallTracker();
+
+      ext.signer = tracker.calls(req => {}, 1);
+      ext.reqs.test = {
+        formData: {
+          hot: 'garbage',
+        },
+      };
+
+      ext.onHeaders({
+        url: 'https://sqs.us-east-1.amazonaws.com/?Action=ListQueues',
+        method: 'GET',
+        requestHeaders: [{
+          name: 'content-type',
+          value: 'multipart/form-data',
+        }],
+        requestId: 'test',
+      });
+
+      tracker.verify();
+    });
   });
 });
 

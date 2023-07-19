@@ -1,7 +1,9 @@
 const browser = require('webextension-polyfill');
 
 const hookConfig = {
-  urls: ['*://*.amazonaws.com/*'],
+  urls: [
+    '*://*.amazonaws.com/*',
+  ],
 };
 
 const s3dash = /s3-(\w+-\w+-\d+)/;
@@ -36,12 +38,28 @@ function Extension(signer) {
       }
     }
 
+    let body = null;
+    if (this.reqs[req.requestId]) {
+      if (this.reqs[req.requestId].raw) {
+        // Use raw if it's available
+        body = this.reqs[req.requestId].raw
+          .reduce((s, x) => s + new TextDecoder().decode(x.bytes), '');
+      } else {
+        // We can not know any of the metadata for file uploads as the webext
+        // spec omits them so we'll never be able to sign multipart bodies.
+        // I kind of doubt we'd be able to guarantee we reconstruct the payload
+        // byte-for-byte for either of the formdata request types anyways so
+        // lets opt-out of content signing on them.
+        flattenedHeaders['X-Amz-Content-Sha256'] = 'UNSIGNED-PAYLOAD';
+      }
+    }
+
     const res = this.signer({
       url: req.url,
       ...this.credentials,
       method: req.method,
       headers: flattenedHeaders,
-      body: this.reqs[req.requestId],
+      body,
     });
 
     delete this.reqs[req.requestId];
@@ -80,7 +98,7 @@ function Extension(signer) {
     }
 
     if (req.requestBody) {
-      this.reqs[req.requestId] = new TextDecoder().decode(req.requestBody.raw[0].bytes);
+      this.reqs[req.requestId] = req.requestBody;
     }
 
     return {};
@@ -108,7 +126,4 @@ function Extension(signer) {
   );
 }
 
-
-
 module.exports = Extension;
-
