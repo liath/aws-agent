@@ -30,15 +30,11 @@ function Extension(signer) {
       };
     }
 
-    let contentType = null;
     const flattenedHeaders = {};
     for (let i = 0; i < req.requestHeaders.length; i++) {
       const header = req.requestHeaders[i].name.toLowerCase();
       if (!header.includes('x-devtools') && header !== 'connection') {
         flattenedHeaders[req.requestHeaders[i].name] = req.requestHeaders[i].value;
-      }
-      if (header === 'content-type') {
-        contentType = req.requestHeaders[i].value.toLowerCase();
       }
     }
 
