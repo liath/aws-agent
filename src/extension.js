@@ -16,6 +16,7 @@ function Extension(signer) {
   this.credentials = {
     accessKeyId: '',
     secretAccessKey: '',
+    sessionToken: '',
   };
   this.reqs = {};
 
@@ -79,7 +80,7 @@ function Extension(signer) {
     }
 
     if (req.requestBody) {
-      this.reqs[req.requestId] = req.requestBody;
+      this.reqs[req.requestId] = new TextDecoder().decode(req.requestBody.raw[0].bytes);
     }
 
     return {};
@@ -89,6 +90,7 @@ function Extension(signer) {
     this.credentials = await browser.storage.sync.get({
       accessKeyId: '',
       secretAccessKey: '',
+      sessionToken: '',
     });
   };
   this.getCredentials();
@@ -105,6 +107,8 @@ function Extension(signer) {
     ['blocking', 'requestHeaders'],
   );
 }
+
+
 
 module.exports = Extension;
 
