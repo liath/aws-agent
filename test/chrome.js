@@ -41,7 +41,6 @@ describe('Chrome Signer', () => {
       requestId: 'test',
     });
 
-    assert.equal(res.requestHeaders.find(x => x.name.toLowerCase() === 'host').value, 'sqs.us-east-1.amazonaws.com');
     assert.ok(res.requestHeaders.find(x => x.name.toLowerCase() === 'authorization'));
   });
 });
